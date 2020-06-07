@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Grafana
+cat > /etc/yum.repos.d/grafana.repo <<EOF
+[grafana]
+name=grafana
+baseurl=https://packages.grafana.com/oss/rpm
+repo_gpgcheck=1
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.grafana.com/gpg.key
+sslverify=1
+sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+EOF
+yum update -y
+yum install -y grafana
+systemctl daemon-reload
+systemctl start grafana-server
+
+# Prometheus
+wget https://github.com/prometheus/prometheus/releases/download/v2.19.0-rc.0/prometheus-2.19.0-rc.0.linux-amd64.tar.gz
+tar xvfz prometheus-2.19.0-rc.0.linux-amd64.tar.gz
+cd prometheus-2.19.0-rc.0.linux-amd64
+cat > prometheus.yml <<EOF
+global:
+  scrape_interval:     15s 
+  evaluation_interval: 15s
+scrape_configs:
+  - job_name: 'sample_instance_1'
+    static_configs:
+    - targets: ['${sample_instance_1}:9100']
+  - job_name: 'sample_instance_2'
+    static_configs:
+    - targets: ['${sample_instance_2}:9100']
+EOF
+./prometheus
