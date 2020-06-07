@@ -1,9 +1,10 @@
 # Iac
-Monitor instances with Prometheus and Grafana
+Monitor on-premise and cloud instances
 ## Getting Started
-
+We will deploy a monitoring instance and 2 sample instances. Monitoring instance will host Prometheus and Grafana. Sample instances will host Node Exporter. In our example, to keep things simple, sample instances are acting as both on-premise instances (with Node Exporter installed) and cloud instances (with ```monitoring = true```).
+1. Monitor on-premise instances with Prometheus (Node Exporter) and Grafana
+2. Monitor cloud instances with CloudWatch and Grafana
 ### Deploy
-Deploy monitoring instance with Prometheus & Grafana and two sample instances with Node Exporter
 
 ```
 cd terraform
@@ -12,11 +13,5 @@ terraform validate
 terraform plan
 terraform apply --auto-approve
 ```
-
-### Datasource
-Manually add Prometheus datasource in Grafana and test the connection
-
-### Query
-Monitor instance metrics
-
-### Alerts
+### Post Deploy
+For on-premise, add Prometheus datasource and for cloud instances, add CloudWatch datasource. Build dashboard, configure alerts and notification channels for each datasource
