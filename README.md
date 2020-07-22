@@ -13,4 +13,4 @@ terraform plan
 terraform apply --auto-approve
 ```
 ### Post Deploy
-add CloudWatch datasource and add Prometheus datasource
+Add CloudWatch datasource and add Prometheus datasource and configure alerts
